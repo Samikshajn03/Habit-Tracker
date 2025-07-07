@@ -1,0 +1,58 @@
+body{
+  background-color: rgb(174, 174, 249);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app-container {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: auto;
+  background-color: white;
+  color: black;
+  border-radius: 20px;
+  padding: 30px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+   background-color: white;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.habit-list {
+  list-style: none;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+}
+
+.habit-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.done {
+  background-color: green;
+  color: white;
+  border: none;
+}
