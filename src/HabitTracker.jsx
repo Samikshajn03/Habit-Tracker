@@ -28,13 +28,12 @@ const HabitTracker = () => {
   setHabits(updatedHabits);
   setNewHabit('');
 
-  // Recalculate streak with the new habit included
+
   setTimeout(() => {
     const newStreak = updateStreakOnAllHabitsDone(updatedHabits);
     setStreak(newStreak);
   }, 0);
 };
-
 
   const toggleHabit = (id) => {
     const today = getToday();
@@ -53,12 +52,11 @@ const HabitTracker = () => {
     });
 
     setHabits(updatedHabits);
-
-    // After update, check streaks
+    
     setTimeout(() => {
       const newStreak = updateStreakOnAllHabitsDone(updatedHabits);
       setStreak(newStreak);
-    }, 0); // Let state update first
+    }, 0); 
   };
 
   const deleteHabit = (id) =>{
@@ -89,7 +87,7 @@ const HabitTracker = () => {
             <span>{habit.name}</span>
             <button 
               onClick={() => toggleHabit(habit.id)} 
-              className={habit.history[getToday()] ? 'done' : ''}
+              className= {habit.history[getToday()] ? 'done' : ''}
             >
               {habit.history[getToday()] ? '✓' : '○'}
             </button>

@@ -4,6 +4,8 @@ export function updateStreakOnAllHabitsDone(habits) {
     lastDate: null
   };
 
+  const previousStreak = JSON.parse(localStorage.getItem('previousStreak')) || null;
+
   const today = new Date().toISOString().slice(0, 10);
   const yesterdayDate = new Date();
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
@@ -20,28 +22,31 @@ export function updateStreakOnAllHabitsDone(habits) {
     habitsToCheck.every(habit => habit.history[yesterday]);
 
   const alreadyUpdatedToday = streakData.lastDate === today;
-
+  
   // ✅ Reset streak if yesterday missed
   if (
     streakData.lastDate &&
     streakData.lastDate !== today &&
     !allDoneYesterday
   ) {
+    localStorage.removeItem('previousStreak');
     streakData.count = 0;
-    streakData.lastDate = null;
-    localStorage.setItem('streak', JSON.stringify(streakData));
-  }
-
-  // ✅ Reset if user unchecked after previously completing all habits
-  if (alreadyUpdatedToday && !allDoneToday) {
-    streakData.count = streakData.count > 0 ? streakData.count - 1 : 0;
     streakData.lastDate = null;
     localStorage.setItem('streak', JSON.stringify(streakData));
     return streakData.count;
   }
 
-  // ✅ Only update streak if not already updated today AND all are done
+  // ✅ User unchecked habit after completing all earlier → restore backup
+  if (!allDoneToday && previousStreak && streakData.lastDate === today) {
+    localStorage.setItem('streak', JSON.stringify(previousStreak));
+    localStorage.removeItem('previousStreak');
+    return previousStreak.count;
+  }
+
+  // ✅ All habits done today and not updated yet → update streak
   if (!alreadyUpdatedToday && allDoneToday) {
+    localStorage.setItem('previousStreak', JSON.stringify(streakData));
+
     if (streakData.lastDate === yesterday) {
       streakData.count += 1;
     } else {
